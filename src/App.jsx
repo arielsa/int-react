@@ -8,7 +8,7 @@ import { CreateTodoButton } from './CreateTodoButton';
 
 
 const todos=[
-  {text:'aprender asp.net', completed: false},
+  {text:'aprender asp.net', completed: true},
   {text:'aprender phyton', completed: false},
   {text:'aprender django ', completed: false},
 ]
@@ -23,12 +23,12 @@ function App() {
       <TodoCounter/>
       
       <TodoSearch/>
-      <input placeholder='aprender JS en profundidad' />
+      
       
       <TodoList>
 
         {todos.map(item => (
-          <TodoItem key={item.text} text={item.text} />
+          <TodoItem key={item.text} text={item.text}  completed={item.completed} />
         ))  }
 
       </TodoList>
