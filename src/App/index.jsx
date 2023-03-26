@@ -21,30 +21,46 @@ import { CreateTodoButton } from '../CreateTodoButton';
 
 function useLocalStorage(itemName,initialValue){
 
+  const [loading, setLoading] = React.useState(true);
+  const [item, setItem] = useState(initialValue);  
+  const [error, setError] = React.useState(false);
+
+  React.useEffect(
+    ()=>{    
+      setTimeout(()=>{
+        try
+        {
+          const localStorageItem = localStorage.getItem(itemName)
+          let parsedItem;  
+  
+          if (!localStorageItem){
+            localStorage.setItem(itemName,JSON.stringify(initialValue));
+            parsedItem =initialValue;
+          } else { parsedItem=JSON.parse(localStorageItem);}
+          setItem(parsedItem);  
+          setLoading(false);
+        } catch(error){ setError(error) }
+      }
+      ,1500)
+    }
+  ,[])
+
+
   
 
-  const localStorageItem = localStorage.getItem(itemName)
-  let parsedItem;  
-
-  if (!localStorageItem){
-    localStorage.setItem(itemName,JSON.stringify(initialValue));
-    parsedItem =initialValue;
-  } else {
-    parsedItem=JSON.parse(localStorageItem);
-  }
-  
-  const [item, setTodos] = useState(parsedItem);  
 
   const saveItem = (newItem)=>{
-    let stringifiedItem = JSON.stringify(newItem);
+    try{let stringifiedItem = JSON.stringify(newItem);
     localStorage.setItem (itemName,stringifiedItem);
-    setTodos(newItem);
+    setItem(newItem);} catch(error){setError(error)}
   }
 
-  return [
+  return {
     item,
-    saveItem
-  ];
+    saveItem,
+    loading,
+    error,
+  };
 
 }
 
@@ -52,7 +68,7 @@ function App() {
 
 
 
-  const [todos,saveTodos] = useLocalStorage('TODOS_V3',[]);
+  const {item:todos,saveItem:saveTodos,loading,error} = useLocalStorage('TODOS_V3',[]);
 
   const [valorBusqueda, setValorBusqueda] = React.useState('');
   let serchedTodos = [];
@@ -91,6 +107,7 @@ function App() {
   return (
     <AppUI
 
+    loading = {loading}
     completedTodos={completedTodos}
     totalTodos={totalTodos}   
     valorBusqueda = {valorBusqueda} 

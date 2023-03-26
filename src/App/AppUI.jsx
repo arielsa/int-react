@@ -12,6 +12,8 @@ import React from 'react'
 
 function AppUI( 
     {
+        loading,
+        error,
         completedTodos ,
         totalTodos ,
         valorBusqueda ,
@@ -39,16 +41,19 @@ function AppUI(
         
         
         <TodoList>
+            {error && <p>hubo un error</p> }
+            {loading && <p>cargando..</p> }
+            {(!loading && !serchedTodos.length)&& <p>ingresa primer tarea</p> }
 
-        {serchedTodos.map(item => (
-            <TodoItem 
-            key={item.text} 
-            text={item.text}  
-            completed={item.completed} 
-            onComplete = {()=>completeTodo(item.text)}
-            deleteTodos = {()=>deleteTodo(item.text)}
-            />
-        ))  }
+            {serchedTodos.map(item => (
+                <TodoItem 
+                key={item.text} 
+                text={item.text}  
+                completed={item.completed} 
+                onComplete = {()=>completeTodo(item.text)}
+                deleteTodos = {()=>deleteTodo(item.text)}
+                />
+            ))  }
 
         </TodoList>
 
