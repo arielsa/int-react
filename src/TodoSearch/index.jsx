@@ -1,14 +1,19 @@
 import React from "react";
+import { TodoContext } from "../TodoContext";
 import './TodoSearch.css'
 
-function TodoSearch({valorBusqueda, setValorBusqueda}){
+function TodoSearch(){
 
-    
+    const {valorBusqueda, setValorBusqueda} = React.useContext(TodoContext)
     
     const onSearchValue = (event)=>{
-        console.log(event.target.value);
+       // console.log(event.target.value);
         setValorBusqueda(event.target.value);
     }
+
+    let buscando='';
+    if (valorBusqueda.length>0){buscando='buscando:'}
+    
 
     return ( 
         
@@ -18,8 +23,9 @@ function TodoSearch({valorBusqueda, setValorBusqueda}){
             placeholder="aprender javascript" 
             value = {valorBusqueda}
             onChange= {onSearchValue}
-            />           
-            <p>{valorBusqueda}</p>
+            />            
+            <div className="p"> {buscando} {valorBusqueda}</div>          
+            
         </React.Fragment>
         )
     
