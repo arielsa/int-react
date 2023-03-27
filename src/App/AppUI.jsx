@@ -4,16 +4,17 @@ import {TodoList} from '../TodoList';
 import { TodoItem } from '../TodoItem';
 import { CreateTodoButton } from '../CreateTodoButton';
 import { TodoContext } from '../TodoContext';
-
+import { Modal } from '../Modal';
 
 import React from 'react'
+import { TodoForm } from '../todoForm';
 
 
 
 
 function AppUI() {
 
-    const {error,loading,serchedTodos,completeTodo,deleteTodo,valorBusqueda} = React.useContext(TodoContext);
+    const {error,loading,serchedTodos,completeTodo,deleteTodo,valorBusqueda,openModal,setOpenModal} = React.useContext(TodoContext);
 
     return(
         
@@ -38,7 +39,16 @@ function AppUI() {
                 ))  }            
             </TodoList>
 
-            <CreateTodoButton/>
+            {openModal && 
+            (
+                <Modal>
+                    <TodoForm/>
+                </Modal>
+            )}
+
+            <CreateTodoButton
+            setOpenModal = {setOpenModal}
+            />
 
         </React.Fragment>
     )

@@ -20,7 +20,7 @@ function TodoSearch(){
         <React.Fragment>
             <input 
             className="TodoSearch" 
-            placeholder="aprender javascript" 
+            placeholder="buscar tarea:" 
             value = {valorBusqueda}
             onChange= {onSearchValue}
             />            
